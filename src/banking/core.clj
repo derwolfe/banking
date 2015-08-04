@@ -28,9 +28,4 @@
      (credit to amount))))
 
 (defn account-balances [accts]
-  (loop [accounts accts]
-    (let [acct (first accounts)
-          balance-amount (balance acct)
-          account-name (:number @acct)]
-      (println "%s has %d" account-name balance-amount)
-      (recur (rest accounts)))))
+  (map (fn [x] (format "%s has %d" (:number (deref x)) (balance x))) accts))

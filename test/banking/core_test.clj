@@ -55,5 +55,5 @@
 (deftest test-prints-balances
   (let [act1 (make-account "act1")]
     (credit act1 100)
-    (is (= "act1 has 100\n"
+    (is (= '("act1 has 100")
            (account-balances [act1])))))

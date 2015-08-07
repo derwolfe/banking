@@ -7,8 +7,8 @@
 
 (defn my-fixture [f]
   (dosync
-    (ref-set checking {:number 1 :money 100})
-    (ref-set savings {:number 2 :money 100})
+    (ref-set checking {:id 1 :money 100})
+    (ref-set savings {:id 2 :money 100})
   (f)))
 
 (use-fixtures :each my-fixture)
@@ -45,11 +45,14 @@
   (is (= 100 (balance savings)))
   (is (= 100 (balance checking))))
 
+;; this is never terminating!
 ;; (deftest test-concurrent-transfers
+;;   "do one hundred transfers in and out of each account using the same amount."
 ;;   (doall (pmap #(do
-;;                   (transfer checking savings %)
-;;                   (transfer savings checking %))
-;;                (take 100 (repeatedly #(rand-int 25)))))
+;;            (transfer checking savings %)
+;;            (transfer savings checking %))
+;;         ;; make a lazy sequence of 100 transactions to perform
+;;         (take 100 (repeatedly #(rand-int 25)))))
 ;;   (is (= 200 (+ (balance savings) (balance checking)))))
 
 (deftest test-prints-balances

@@ -1,10 +1,10 @@
 (ns banking.core)
 
 (defn seed-account [id seed]
-  {:id id :money seed})
+  {:id id :money seed :transactions 0})
 
 (defn make-account! [acct-id seed]
-  (ref {:id acct-id :money seed}))
+  (ref {:id acct-id :money seed :transactions 0}))
 
 (defn account-id [account]
   (:id @account))
@@ -13,7 +13,7 @@
   (:money @account))
 
 (defn- credit [account amount]
-  (assoc account :money (+ (:money account) amount)))
+  (assoc (update-in account [:transactions] inc) :money (+ (:money account) amount)))
 
 (defn- debit [account amount]
   (if (> amount (:money account))

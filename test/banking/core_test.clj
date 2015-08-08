@@ -57,8 +57,8 @@
       (take 100 (repeatedly #(rand-int 25)))))
     ;; shouldn't the result of these transfers end up with EACH accont
     ;; still equalling the initial 100?
-    (is (= 100 (:transactions @a)))
-    (is (= 100 (:transactions @b)))))
+    (is (= 199 (:transactions @a)))
+    (is (= 199 (:transactions @b)))))
 
 (deftest test-prints-balances
   (let [act1 (make-account! "act1" 100)]

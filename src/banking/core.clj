@@ -13,7 +13,9 @@
   (:money @account))
 
 (defn- credit [account amount]
-  (assoc (update-in account [:transactions] inc) :money (+ (:money account) amount)))
+  (-> account
+      (update-in [:transactions] inc)
+      (assoc :money (+ (:money account) amount))))
 
 (defn- debit [account amount]
   (if (> amount (:money account))

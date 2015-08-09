@@ -24,18 +24,17 @@
 
 (defn credit! [account amount]
   (dosync
-   (alter account credit amount)))
+   (commute account credit amount)))
 
 (defn debit! [account amount]
   (dosync
-   (alter account debit amount)))
+   (commute account debit amount)))
 
 (defn transfer! [from to amount]
   (dosync
    (when (>= (balance from) amount)
-     (Thread/sleep 100)
-     (debit! from amount)
-     (credit! to amount))))
+     (alter from debit amount)
+     (alter to credit amount))))
 
 (defn account-balances [accts]
   (map

@@ -53,11 +53,11 @@
     (doall
      (pmap
       #(do
+         (Thread/sleep 100)
          (transfer! a b %)
          (transfer! b a %))
-      (take 30 (repeatedly #(rand-int 25)))))
-    ;; shouldn't the result of these transfers end up with EACH accont
-    ;; still equalling the initial 100?
+      ;; this fails intermittently at 500
+      (take 100 (repeatedly #(rand-int 25)))))
     (is (= 100 (balance a)))
     (is (= 100 (balance b)))))
 
